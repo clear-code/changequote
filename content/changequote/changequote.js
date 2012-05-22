@@ -239,6 +239,21 @@ function reverseAutoQuote() {
 }
 	
 
+function composeNew(event, reversequote, type) {
+	event.stopPropagation();
+	if (reversequote)
+		reverseAutoQuote();
+	CQcomposeMessage(CQmsgComposeType.New, type, false);
+}
+
+function composeNewHTML(event, reversequote) {
+	composeNew(event, reversequote, 1);
+}
+
+function composeNewText(event, reversequote) {
+	composeNew(event, reversequote, 2);
+}
+
 function replyHTML(event,reversequote) {
 	event.stopPropagation();
 	/*var CQmail_inline_attach = CQprefs.getBoolPref("mail.inline_attachments");
