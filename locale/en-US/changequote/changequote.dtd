@@ -1,3 +1,6 @@
+<!ENTITY CQLabelComposeText "Compose new in text format">
+<!ENTITY CQLabelComposeHtml "Compose new in HTML format">
+
 <!ENTITY CQcaption1 "Reply header">
 <!ENTITY CQcaption2 "Format and actions">
 <!ENTITY CQlabel1 "Extended reply header (sender, recipients, subject, date)">

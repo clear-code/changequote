@@ -1,3 +1,6 @@
+<!ENTITY CQLabelComposeText "テキスト形式で作成">
+<!ENTITY CQLabelComposeHtml "HTML形式で作成">
+
 <!ENTITY CQcaption1 "返信ヘッダ">
 <!ENTITY CQcaption2 "フォーマットと機能">
 <!ENTITY CQlabel1 "返信ヘッダの拡張 (差出人、受取人、件名、日付)">

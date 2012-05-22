@@ -9,6 +9,13 @@
 <script type="application/x-javascript" src="chrome://messenger/content/dateFormat.js" />
 <script type="application/x-javascript" src="chrome://messenger/content/messenger/MsgComposeCommands.js" />
 
+<toolbarbutton id="button-newmsg" type="menu-button" oncommand="MsgNewMessage(event);">
+  <menupopup onpopupshowing="CQsetReverseLabel()">
+    <menuitem id="composenewtext" label="&CQLabelComposeText;" oncommand="composeNewText(event);" />
+    <menuitem id="composenewhtml" label="&CQLabelComposeHtml;" oncommand="composeNewHTML(event);" />
+  </menupopup>
+</toolbarbutton>
+
 <toolbarbutton id="button-reply" type="menu-button" oncommand="MsgReplyMessage(event);">
 		<menupopup onpopupshowing="CQsetReverseLabel()">
 		<menuitem id="replyhtml" label="&CQlabelitem1;" tooltiptext="&CQlabelitem1;" oncommand="replyHTML(event,false);" />
