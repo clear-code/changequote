@@ -239,19 +239,26 @@ function reverseAutoQuote() {
 }
 	
 
-function composeNew(event, reversequote, type) {
+function composeNew(event, type) {
 	event.stopPropagation();
-	if (reversequote)
-		reverseAutoQuote();
-	CQcomposeMessage(CQmsgComposeType.New, type, false);
+
+	var msgFolder = gFolderDisplay ? GetFirstSelectedMsgFolder() : null;
+	var msgUris = gFolderDisplay ? gFolderDisplay.selectedMessageUris : null;
+
+	ComposeMessage(
+		CQmsgComposeType.New,
+		type,
+		msgFolder,
+		msgUris
+	);
 }
 
-function composeNewHTML(event, reversequote) {
-	composeNew(event, reversequote, 1);
+function composeNewHTML(event) {
+	composeNew(event, 1);
 }
 
-function composeNewText(event, reversequote) {
-	composeNew(event, reversequote, 2);
+function composeNewText(event) {
+	composeNew(event, 2);
 }
 
 function replyHTML(event,reversequote) {
