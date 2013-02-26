@@ -57,6 +57,10 @@
 	</menupopup>
 </button>
 
+<toolbarbutton id="hdrReplyButton" type="menu-button">
+		<menupopup id="hdrReplyDropdown"/>
+</toolbarbutton>
+
 <menupopup id="hdrReplyDropdown" onpopupshowing="CQsetReverseLabelHRD()">
 		<menuseparator />
 		<menuitem label="&CQlabelitem1;" tooltiptext="&CQlabelitem1;" oncommand="replyHTML(event,false);" />
