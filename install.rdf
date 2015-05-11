@@ -5,9 +5,9 @@ xmlns:em="http://www.mozilla.org/2004/em-rdf#">
 
 	<Description about="urn:mozilla:install-manifest">
 
-		<em:id>{f6090211-2004-44d8-9090-be3c2adfd66f}</em:id>
-		<em:name>Change quote and reply format</em:name>
-		<em:version>0.8.6</em:version>
+		<em:id>{1be4c6f5-58c0-4a71-80e9-048e4a215409}</em:id>
+		<em:name>Change quote and reply format plus</em:name>
+		<em:version>0.8.6+</em:version>
 		<em:description>Change the reply header and the reply format</em:description>
 		<em:creator>Paolo Kaosmos</em:creator>
 		<em:optionsURL>chrome://changequote/content/changequoteOptions.xul</em:optionsURL>
