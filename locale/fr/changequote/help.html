@@ -16,6 +16,8 @@ SYNTAXE DES EN-TÊTES PERSONNALISÉS
 %%5 = date 
 %%6 = auteur (seulement le nom) 
 %%7 = auteur (seulement l'adresse)
+%%8 = destinataires (seulement le nom) 
+%%9 = destinataires (Copie Cachée - seulement le nom) 
 
 Les parties insérées entre {{ et }} seront affichées seulement si
 le champ correspondant de l'en-tête est renseigné.
@@ -45,6 +47,8 @@ SYNTAXE DU FORMAT DE DATE PERSONNALISÉ
 %h = heure, au format 12h ("01" à "12")
 %A = "AM" ou "PM"
 %a = "am" ou "pm"
+%e = space-filled date of month
+%z = timezone offset from UTC
 <!-- LOCALIZED PART END -->
 
 </pre>

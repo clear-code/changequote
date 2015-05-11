@@ -37,3 +37,5 @@
 <!ENTITY capitalizeDate "Inledande versal i datum">
 <!ENTITY CQbold "Huvudtaggar i fetstil">
 <!ENTITY htmlSupport "Stöd för HTML-taggar">
+<!ENTITY local "local">
+<!ENTITY sender "sender">

@@ -1,12 +1,12 @@
 <!ENTITY CQcaption1 "返信ヘッダ">
 <!ENTITY CQcaption2 "フォーマットと機能">
-<!ENTITY CQlabel1 "返信ヘッダの拡張（差出人、受取人、件名、日付)">
+<!ENTITY CQlabel1 "返信ヘッダの拡張 (差出人、受取人、件名、日付)">
 <!ENTITY CQlabel1a "CC もヘッダに挿入する">
 <!ENTITY CQlabel1b "常に英語ヘッダを使用する">
 <!ENTITY CQlabel1d "ニュースグループ用のカスタマイズヘッダを使用する">
 <!ENTITY CQlabel2 "Thunderbird 標準ヘッダを使用する">
 <!ENTITY CQlabel3 "返信ヘッダのカスタマイズ">
-<!ENTITY CQlabel4 "オリジナルメール（HTML か テキスト)と同じ形式を使用する">
+<!ENTITY CQlabel4 "オリジナルメール (HTML か テキスト) と同じ形式を使用する">
 <!ENTITY CQlabel5 "添付ファイルを削除して返信する">
 <!ENTITY CQlabel6 "返信後にメッセージウィンドウを閉じる">
 <!ENTITY CQlabel7 "返信後に既読にする">
@@ -15,7 +15,7 @@
 <!ENTITY CQlabelitem2 "プレーンテキスト形式で返信">
 <!ENTITY CQlabelmenu "その他">
 <!ENTITY CQnewstitle "ニュースグループ返信ヘッダ">
-<!ENTITY CQnewslabel1 "第 1 ヘッダ部分(&#37;s 差出人):">
+<!ENTITY CQnewslabel1 "第 1 ヘッダ部分 (&#37;s 差出人):">
 <!ENTITY CQnewslabel2 "第 2 ヘッダ部分（&#37;s 日付):">
 <!ENTITY CQnewsdescr1 "返信ヘッダ先頭部の選択">
 <!ENTITY CQnewsradio1 "差出人">
@@ -37,3 +37,5 @@
 <!ENTITY capitalizeDate "日付を大文字にする">
 <!ENTITY CQbold "太字のヘッダタグにする">
 <!ENTITY htmlSupport "HTML タグに対応する">
+<!ENTITY local "受取人ロケール時間">
+<!ENTITY sender "差出人ロケール時間">

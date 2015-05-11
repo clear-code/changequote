@@ -37,3 +37,5 @@
 <!ENTITY capitalizeDate "Datum in Großbuchstaben">
 <!ENTITY CQbold "Kopfzeilen im Fett">
 <!ENTITY htmlSupport "Unterstützung von HTML-Tags">
+<!ENTITY local "lokal">
+<!ENTITY sender "Absender">

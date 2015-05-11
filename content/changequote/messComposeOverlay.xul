@@ -5,6 +5,7 @@
 <script type="application/x-javascript">
 <![CDATA[
 
+var CQcomposeHeader;
 var TBComposeStartupOriginal = ComposeStartup;
 var ComposeStartup = function (recycled, aParams) {
 	try {
@@ -21,14 +22,18 @@ var ComposeStartup = function (recycled, aParams) {
 		else
 			var par = window.arguments[0];
 		var html = par.identity.composeHtml;
+		if (CQprefs.getPrefType("mailnews.reply_header_authorwrotesingle") > 0)
+			var pref = "mailnews.reply_header_authorwrotesingle";
+		else
+			var pref = "mailnews.reply_header_authorwrote";
+		CQcomposeHeader = CQprefs.getComplexValue(pref,Components.interfaces.nsISupportsString).data;
 		if (par.format == 2 || (par.format == 0 && ! html) ||  (par.format == 3 && html) ) {
 			var str = Components.classes["@mozilla.org/supports-string;1"].createInstance(Components.interfaces.nsISupportsString);
-			var header = CQprefs.getComplexValue("mailnews.reply_header_authorwrote",Components.interfaces.nsISupportsString).data;
-			str.data = header.replace(/\[\[.+?\]\]/g,"");
-			CQprefs.setComplexValue("mailnews.reply_header_authorwrote", Components.interfaces.nsISupportsString, str);
+			str.data = CQcomposeHeader.replace(/\(\[\[\).+?\(\]\]\)/g,"");
+			CQprefs.setComplexValue(pref, Components.interfaces.nsISupportsString, str);
 		}
 	}
-	catch(e) {}
+	catch(e) {};
 	TBComposeStartupOriginal.apply(this,arguments);	
 };
 
@@ -49,24 +54,24 @@ var CompFields2Recipients = function(msgCompFields) {
 function CQrestoreHTMLtags() {
 	var doc = document.getElementById("content-frame").contentDocument;
 	var inner = doc.body.innerHTML;
-	if (inner.length < 20 || inner.indexOf("[[") < 0)
+	if (! gMsgCompose.composeHTML || inner.length < 20 || inner.indexOf("([[)") < 0)
 		return;
-	inner = inner.replace(/\[\[/g,"<");
-	inner = inner.replace(/\]\]/g,">");
+	inner = inner.replace(/\(\[\[\)/g,"<");
+	inner = inner.replace(/\(\]\]\)/g,">");
 	doc.body.innerHTML = inner;
+	if (! CQbodyListener.QACM) {
+		var imgs = doc.getElementsByTagName("img");
+		for (var i=0; i<imgs.length;i++) {
+			var img = imgs[i];
+			var src = img.src;
+			src = src.replace("%7C", ":");
+			img.setAttribute("src", src);
+		}
+	}
 	var id = getCurrentIdentity();
 	if (! id.replyOnTop) {
 		content.scroll(0,10000);
 		GetCurrentEditor().endOfDocument();
-	}
-	if (CQbodyListener.QACM)
-		return;
-	var imgs = doc.getElementsByTagName("img");
-	for (var i=0; i<imgs.length;i++) {
-		var img = imgs[i];
-		var src = img.src;
-		src = src.replace("%7C", ":");
-		img.setAttribute("src", src);
 	}
 }
 
@@ -106,7 +111,7 @@ var CQedListener = {
 			(CQprefs.getBoolPref("changequote.headers.custom_news_html_enabled") || CQprefs.getBoolPref("changequote.headers.custom_html_enabled")) 
 			))
 			return;	
-		if (! nowDirty && gMsgCompose.composeHTML) {
+		if (! nowDirty) {
 			var type = gMsgCompose.type;
 			// If it's not a reply, we don't need to do anything 
 			if (type != 1 && type !=2 && type !=6 && type !=7 && type !=8)

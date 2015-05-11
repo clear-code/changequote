@@ -37,3 +37,5 @@
 <!ENTITY capitalizeDate "Capitalizar a data">
 <!ENTITY CQbold "Headers tags with bold font">
 <!ENTITY htmlSupport "Html tags support">
+<!ENTITY local "local">
+<!ENTITY sender "remetente">

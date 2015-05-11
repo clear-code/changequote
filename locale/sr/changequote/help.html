@@ -15,6 +15,8 @@ SYNTAX FOR CUSTOMIZED HEADERS
 %%5 = date 
 %%6 = author (name only) 
 %%7 = author (address only)
+%%8 = recipients (name only)
+%%9 = recipients (CC - name only)
 
 The parts enclosed between {{ and }} are displayed
 just if the header inside is not null.
@@ -42,6 +44,8 @@ SYNTAX FOR CUSTOMIZED DATE FORMAT
 %h = hour, 12-hour format ("01" to "12")
 %A = "AM" or "PM"
 %a = "am" or "pm"
+%e = space-filled date of month
+%z = timezone offset from UTC
 <!-- LOCALIZED PART END -->
 
 </pre>

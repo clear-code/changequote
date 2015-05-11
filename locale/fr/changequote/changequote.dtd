@@ -37,3 +37,5 @@
 <!ENTITY capitalizeDate "Mettre la date en capitales">
 <!ENTITY CQbold "Balises d'en-tête en gras">
 <!ENTITY htmlSupport "Prise en charge des balises HTML">
+<!ENTITY local "local">
+<!ENTITY sender "sender">

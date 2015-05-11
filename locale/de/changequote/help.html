@@ -13,8 +13,10 @@ SYNTAX FÜR ANGEPASSTES ANTWORTFORMAT
 %%3 = Empfänger (CC)
 %%4 = Betreff
 %%5 = Datum
-%%6 = Autor(nur Name) 
-%%7 = Autor(nur Adresse)
+%%6 = Autor (nur Name) 
+%%7 = Autor (nur Adresse)
+%%8 = Empfänger (nur Name) 
+%%9 = Empfänger (CC - nur Name) 
 
 Das Teil zwischen {{ und }} wird nur dann
 angezeigt, wenn Inhalt dazwischen nicht leer ist. 
@@ -42,6 +44,8 @@ SYNTAX FÜR ANGEPASSTES DATUMFORMAT
 %h = Stunde, 12-Stunden Format ("01" bis "12")
 %A = "AM" oder "PM"
 %a = "am" oder "pm"
+%e = space-filled date of month
+%z = timezone offset from UTC
 <!-- LOCALIZED PART END -->
 
 </pre>

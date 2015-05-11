@@ -6,42 +6,45 @@
 <body>
 <pre>
 <!-- LOCALIZED PART BEGINNING -->
-SYNTAX FOR CUSTOMIZED HEADERS
+[カスタマイズ用の変換構文]
 
-%%1 = author 
-%%2 = recipients 
-%%3 = recipients (CC)
-%%4 = subject
-%%5 = date 
-%%6 = author (name only) 
-%%7 = author (address only)
+%%1 = 差出人 (From)
+%%2 = 受取人 (To)
+%%3 = 同報受取人 (Cc)
+%%4 = 件名 (Subject)
+%%5 = 日付 (Date)
+%%6 = 差出人 (名前のみ)
+%%7 = 差出人 (メールアドレスのみ)
+%%8 = 受取人 (To - 名前のみ)
+%%9 = 同報受取人 (Cc - 名前のみ)
 
-The parts enclosed between {{ and }} are displayed
-just if the header inside is not null.
-This means that a header with
+内部ヘッダが空白でない場合、{{ and }} で
+囲まれた部分を表示することができます。
+これは次のような内容となります。
 
 To : %%2{{ and %%3}} 
 
-will give
+とすると下記のように展開されます。
 
-To : mail1@xxx.org (if CC is null)
-To : mail1@xxx.org and mail2@xxx.org (if CC is mail2@xxx.org)
+To : mail1@xxx.org (Cc が空白の場合)
+To : mail1@xxx.org and mail2@xxx.org (Cc が mail2@xxx.org の場合)
 
 
-SYNTAX FOR CUSTOMIZED DATE FORMAT
+[カスタマイズ用の日付変換構文]
 
-%d = day of the month, 2 digits ("01" to "31")
-%D = day of the week, textual, english, 3 letters ("Fri")
-%m = month ("01" to "12")
-%M = month, textual, english, 3 letters ("Jan")
-%y = year, 2 digits ("99")
-%Y = year, 4 digits ("1999")
-%i = minutes ("00" to "59")
-%s = seconds ("00" to "59")
-%H = hour, 24-hour format ("00" to "23")
-%h = hour, 12-hour format ("01" to "12")
-%A = "AM" or "PM"
-%a = "am" or "pm"
+%d = 日付 (01 ～ 31)
+%D = 曜日 ("Fri")
+%m = 月 (01 ～ 12)
+%M = 月 ("Jan")
+%Y = 年 (西暦 4 桁 "1999")
+%i = 分 (00 ～ 59)
+%s = 秒 (00 ～ 59)
+%H = 24 時間制 (00 ～ 23)
+%h = 12 時間制 (01 ～ 12)
+%A = "AM" または "PM"
+%a = "am" または "pm"
+%e = "月初からの日数"
+%z = "UTC タイムゾーン"
 <!-- LOCALIZED PART END -->
 
 </pre>

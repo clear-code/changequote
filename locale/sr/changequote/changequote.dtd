@@ -1,5 +1,5 @@
 <!ENTITY CQcaption1 "Заглавље одговора">
-<!ENTITY CQcaption2 "Облик и акције">
+<!ENTITY CQcaption2 "Облик и радње">
 <!ENTITY CQlabel1 "Проширено  заглавље одговора (пошиљалац, прималац, предмет, датум)">
 <!ENTITY CQlabel1a "Уметни CC поље у заглавље">
 <!ENTITY CQlabel1b "Увек користи заглавља на енглеском језику">
@@ -37,3 +37,5 @@
 <!ENTITY capitalizeDate "Датум испиши великим словима">
 <!ENTITY CQbold "Подебљај ознаке заглавља">
 <!ENTITY htmlSupport "Подршка за HTML ознаке">
+<!ENTITY local "локално">
+<!ENTITY sender "пошиљалац">

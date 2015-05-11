@@ -9,7 +9,7 @@
 <!ENTITY CQlabel4 "In antwoord identieke opmaak (HTML of platte tekst) als in oorspronkelijk bericht gebruiken">
 <!ENTITY CQlabel5 "Antwoorden zonder inline bijlagen">
 <!ENTITY CQlabel6 "Berichtvenster sluiten na antwoorden">
-<!ENTITY CQlabel7 "Bericht als gelezen markeren na antwoorden">
+<!ENTITY CQlabel7 "Bericht na antwoorden als gelezen markeren">
 <!ENTITY CQbutton1 "Bewerken">
 <!ENTITY CQlabelitem1 "Antwoorden in HTML">
 <!ENTITY CQlabelitem2 "Antwoorden in platte tekst">
@@ -37,3 +37,5 @@
 <!ENTITY capitalizeDate "Datum in hoofdletters">
 <!ENTITY CQbold "Headerlabels vetgedrukt">
 <!ENTITY htmlSupport "Ondersteuning voor HTML-labels">
+<!ENTITY local "lokaal">
+<!ENTITY sender "afzender">

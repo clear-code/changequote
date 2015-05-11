@@ -15,6 +15,8 @@ SYNTAX FÖR ANPASSADE HUVUDEN
 %%5 = datum 
 %%6 = avsändare (endast namn) 
 %%7 = avsändare (endast adress)
+%%8 = mottagare (endast namn) 
+%%9 = mottagare (Kopia: - endast namn) 
 
 De delar som är omslutna av {{ och }} visas
 endast om huvudet inuti dem inte är null.
@@ -42,6 +44,8 @@ SYNTAX FÖR ANPASSADE DATUMFORMAT
 %h = timmar, 12-timmarsformat ("01" till "12")
 %A = "AM" eller "PM"
 %a = "am" eller "pm"
+%e = space-filled date of month
+%z = timezone offset from UTC
 <!-- LOCALIZED PART END -->
 
 </pre>

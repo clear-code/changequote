@@ -36,4 +36,6 @@
 <!ENTITY dateCustom "自定义格式">
 <!ENTITY capitalizeDate "大写日期">
 <!ENTITY CQbold "头标签粗体">
-<!ENTITY htmlSupport "支持HTML标签">
+<!ENTITY htmlSupport "支持 HTML 标签">
+<!ENTITY local "本地">
+<!ENTITY sender "发送者">

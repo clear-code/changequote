@@ -61,10 +61,15 @@ function CQnoReplyTo(event) {
 }*/
 
 function isNews() {
-	if (typeof GetLoadedMsgFolder == "undefined")
-		var typeserver = gFolderDisplay.displayedFolder.server.type;
-	else
-		var typeserver = GetLoadedMsgFolder().server.type;
+	try {
+		if (typeof GetLoadedMsgFolder == "undefined")
+			var typeserver = gFolderDisplay.displayedFolder.server.type;
+		else
+			var typeserver = GetLoadedMsgFolder().server.type;
+	}
+	catch(e) {
+		var typeserver = "unknown";
+	}
 	if (typeserver == "nntp") 
 		return true;
 	else
@@ -76,7 +81,7 @@ function CQcomposeMessage(compType, format, isNNTP) {
 	var CQdateformat = CQprefs.getIntPref("changequote.headers.date_long_format");
 	var CQheaders_news = CQprefs.getBoolPref("changequote.set.headers.news");
 	CQuse_date_long = false;
-	
+
 	if (typeof GetLoadedMsgFolder == "undefined")
 		var loadedFolder = gFolderDisplay.displayedFolder; 
 	else
@@ -84,7 +89,7 @@ function CQcomposeMessage(compType, format, isNNTP) {
 	// Avoid the multiple reply, just the first mail is loaded in the messageArray
 	var messageArray =  [CQGetFirstSelectedMessage()]; 
 	
-	if (format < 0 || CQdateformat == 2)
+	if (format < 0 || CQdateformat == 2 || CQdateformat == 4)
 		CQparseheader(messageArray[0]);
 
 	if (format < 0) {
@@ -93,6 +98,8 @@ function CQcomposeMessage(compType, format, isNNTP) {
 		else  
 			format = CQprefs.getIntPref("changequote.replyformat.format");
 	}	
+
+	var id = CQgetCurrentIdentity();
 	
 	if (isNNTP) {
 		if (CQheaders_news)
@@ -117,18 +124,22 @@ function CQcomposeMessage(compType, format, isNNTP) {
 function CQgetCurrentIdentity() {
 	var identity = null;
 	var server = null;
-	var emailuri =  CQGetFirstSelectedMessage(); 
-	var CQmessenger = Components.classes["@mozilla.org/messenger;1"].createInstance();
-	CQmessenger = CQmessenger.QueryInterface(Components.interfaces.nsIMessenger);
-	// Get the header in the form of nsIMsgDBHdr
-	var hdr = CQmessenger.messageServiceFromURI(emailuri).messageURIToMsgHdr(emailuri);
-	var hintForIdentity = hdr.recipients + hdr.ccList;
-	var accountKey = hdr.accountKey;
-	if (accountKey.length > 0)   {
-		var account = accountManager.getAccount(accountKey);
-		if (account)
-			server = account.incomingServer;
+	var hintForIdentity = null;
+	try {
+		var emailuri =  CQGetFirstSelectedMessage(); 
+		var CQmessenger = Components.classes["@mozilla.org/messenger;1"].createInstance();
+		CQmessenger = CQmessenger.QueryInterface(Components.interfaces.nsIMessenger);
+		// Get the header in the form of nsIMsgDBHdr
+		var hdr = CQmessenger.messageServiceFromURI(emailuri).messageURIToMsgHdr(emailuri);
+		hintForIdentity = hdr.recipients + hdr.ccList;
+		var accountKey = hdr.accountKey;
+		if (accountKey.length > 0)   {
+			var account = accountManager.getAccount(accountKey);
+			if (account)
+				server = account.incomingServer;
+		}
 	}
+	catch(e) {}
 	if (server && !identity) 
 		identity = getIdentityForServer(server, hintForIdentity);
 	if (!identity)  {
@@ -151,24 +162,56 @@ function CQsetReverseLabelHRD() {
 	var identity = CQgetCurrentIdentity();
 	try {
           if (! identity.autoQuote) {
-		document.getElementById("replyhtml_reversequote_hrd1").setAttribute("collapsed", "true");
-		document.getElementById("replytext_reversequote_hrd1").setAttribute("collapsed", "true"); 
-		document.getElementById("replyhtml_reversequote_hrd2").removeAttribute("collapsed");
-		document.getElementById("replytext_reversequote_hrd2").removeAttribute("collapsed");
-		document.getElementById("replyhtml_reversequote_hrd3").setAttribute("collapsed", "true");
-		document.getElementById("replytext_reversequote_hrd3").setAttribute("collapsed", "true"); 
-		document.getElementById("replyhtml_reversequote_hrd4").removeAttribute("collapsed");
-		document.getElementById("replytext_reversequote_hrd4").removeAttribute("collapsed");
+		if (document.getElementById("replyhtml_reversequote_hrd1")) {
+			document.getElementById("replyhtml_reversequote_hrd1").setAttribute("collapsed", "true");
+			document.getElementById("replytext_reversequote_hrd1").setAttribute("collapsed", "true"); 
+		}
+		if (document.getElementById("replyhtml_reversequote_hrd2")) {
+			document.getElementById("replyhtml_reversequote_hrd2").removeAttribute("collapsed");
+			document.getElementById("replytext_reversequote_hrd2").removeAttribute("collapsed");	
+		}
+		if (document.getElementById("replyhtml_reversequote_hrd3")) {
+			document.getElementById("replyhtml_reversequote_hrd3").setAttribute("collapsed", "true");
+			document.getElementById("replytext_reversequote_hrd3").setAttribute("collapsed", "true"); 
+		}
+		if (document.getElementById("replyhtml_reversequote_hrd4")) {
+			document.getElementById("replyhtml_reversequote_hrd4").removeAttribute("collapsed");
+			document.getElementById("replytext_reversequote_hrd4").removeAttribute("collapsed");
+		}
+		if (document.getElementById("replyhtml_reversequote_hrd5")) {
+			document.getElementById("replyhtml_reversequote_hrd5").setAttribute("collapsed", "true");
+			document.getElementById("replytext_reversequote_hrd5").setAttribute("collapsed", "true"); 
+		}
+		if (document.getElementById("replyhtml_reversequote_hrd6")) {
+			document.getElementById("replyhtml_reversequote_hrd6").removeAttribute("collapsed");
+			document.getElementById("replytext_reversequote_hrd6").removeAttribute("collapsed");	
+		}
 	  }
 	  else {
-		document.getElementById("replyhtml_reversequote_hrd1").removeAttribute("collapsed");
-		document.getElementById("replytext_reversequote_hrd1").removeAttribute("collapsed");
-		document.getElementById("replyhtml_reversequote_hrd2").setAttribute("collapsed", "true");
-		document.getElementById("replytext_reversequote_hrd2").setAttribute("collapsed", "true");
-		document.getElementById("replyhtml_reversequote_hrd3").removeAttribute("collapsed");
-		document.getElementById("replytext_reversequote_hrd3").removeAttribute("collapsed");
-		document.getElementById("replyhtml_reversequote_hrd4").setAttribute("collapsed", "true");
-		document.getElementById("replytext_reversequote_hrd4").setAttribute("collapsed", "true");
+		if (document.getElementById("replyhtml_reversequote_hrd1")) {
+			document.getElementById("replyhtml_reversequote_hrd1").removeAttribute("collapsed");
+			document.getElementById("replytext_reversequote_hrd1").removeAttribute("collapsed");
+		}
+		if (document.getElementById("replyhtml_reversequote_hrd2")) {
+			document.getElementById("replyhtml_reversequote_hrd2").setAttribute("collapsed", "true");
+			document.getElementById("replytext_reversequote_hrd2").setAttribute("collapsed", "true");
+		}
+		if (document.getElementById("replyhtml_reversequote_hrd3")) {
+			document.getElementById("replyhtml_reversequote_hrd3").removeAttribute("collapsed");
+			document.getElementById("replytext_reversequote_hrd3").removeAttribute("collapsed");
+		}
+		if (document.getElementById("replyhtml_reversequote_hrd4")) {
+			document.getElementById("replyhtml_reversequote_hrd4").setAttribute("collapsed", "true");
+			document.getElementById("replytext_reversequote_hrd4").setAttribute("collapsed", "true");
+		}
+		if (document.getElementById("replyhtml_reversequote_hrd5")) {
+			document.getElementById("replyhtml_reversequote_hrd5").removeAttribute("collapsed");
+			document.getElementById("replytext_reversequote_hrd5").removeAttribute("collapsed");
+		}
+		if (document.getElementById("replyhtml_reversequote_hrd6")) {
+			document.getElementById("replyhtml_reversequote_hrd6").setAttribute("collapsed", "true");
+			document.getElementById("replytext_reversequote_hrd6").setAttribute("collapsed", "true");
+		}
 	  }
 	}
 	catch(e) {}
@@ -178,16 +221,40 @@ function CQsetReverseLabelAllHRD() {
 	var identity = CQgetCurrentIdentity();
 	try {
           if (! identity.autoQuote) {
-		document.getElementById("replyhtmlALL_reversequote_hrd1").setAttribute("collapsed", "true");
-		document.getElementById("replytextALL_reversequote_hrd1").setAttribute("collapsed", "true"); 
-		document.getElementById("replyhtmlALL_reversequote_hrd2").removeAttribute("collapsed");
-		document.getElementById("replytextALL_reversequote_hrd2").removeAttribute("collapsed"); 
+		if (document.getElementById("replyhtmlALL_reversequote_hrd1")) {
+			document.getElementById("replyhtmlALL_reversequote_hrd1").setAttribute("collapsed", "true");
+			document.getElementById("replytextALL_reversequote_hrd1").setAttribute("collapsed", "true"); 
+		}
+		if (document.getElementById("replyhtmlALL_reversequote_hrd2")) {
+			document.getElementById("replyhtmlALL_reversequote_hrd2").removeAttribute("collapsed");
+			document.getElementById("replytextALL_reversequote_hrd2").removeAttribute("collapsed"); 
+		}
+		if (document.getElementById("replyhtmlALL_reversequote_hrd3")) {
+			document.getElementById("replyhtmlALL_reversequote_hrd3").setAttribute("collapsed", "true");
+			document.getElementById("replytextALL_reversequote_hrd3").setAttribute("collapsed", "true"); 
+		}
+		if (document.getElementById("replyhtmlALL_reversequote_hrd4")) {
+			document.getElementById("replyhtmlALL_reversequote_hrd4").removeAttribute("collapsed");
+			document.getElementById("replytextALL_reversequote_hrd4").removeAttribute("collapsed"); 
+		}
 	  }	
 	  else { 
-		document.getElementById("replyhtmlALL_reversequote_hrd1").removeAttribute("collapsed");
-		document.getElementById("replytextALL_reversequote_hrd1").removeAttribute("collapsed");
-		document.getElementById("replyhtmlALL_reversequote_hrd2").setAttribute("collapsed", "true");
-		document.getElementById("replytextALL_reversequote_hrd2").setAttribute("collapsed", "true");
+		if (document.getElementById("replyhtmlALL_reversequote_hrd1")) {
+			document.getElementById("replyhtmlALL_reversequote_hrd1").removeAttribute("collapsed");
+			document.getElementById("replytextALL_reversequote_hrd1").removeAttribute("collapsed");
+		}
+		if (document.getElementById("replyhtmlALL_reversequote_hrd2")) {
+			document.getElementById("replyhtmlALL_reversequote_hrd2").setAttribute("collapsed", "true");
+			document.getElementById("replytextALL_reversequote_hrd2").setAttribute("collapsed", "true");
+		}
+		if (document.getElementById("replyhtmlALL_reversequote_hrd3")) {
+			document.getElementById("replyhtmlALL_reversequote_hrd3").removeAttribute("collapsed");
+			document.getElementById("replytextALL_reversequote_hrd3").removeAttribute("collapsed");
+		}
+		if (document.getElementById("replyhtmlALL_reversequote_hrd4")) {
+			document.getElementById("replyhtmlALL_reversequote_hrd4").setAttribute("collapsed", "true");
+			document.getElementById("replytextALL_reversequote_hrd4").setAttribute("collapsed", "true");
+		}
 	  }
 	}
 	catch(e) {}
@@ -375,7 +442,6 @@ function MsgReplyGroup(event) {
 	var CQreply_without_attach = CQprefs.getBoolPref("changequote.reply.without_inline_images");
 	if (CQmail_inline_attach && CQreply_without_attach)
 		disableInline();*/
-	
 	if (event && event.shiftKey)
 		CQcomposeMessage(CQmsgComposeType.ReplyToGroup,CQmsgComposeFormat.OppositeOfDefault,true);
 	else
@@ -548,15 +614,29 @@ function loadHeader(email, custom, isNNTP,cite) {
 
 	if (cite) // no HTML support for cite
 		realnewhdr = realnewhdr.replace(/\[\[.+?\]\]/g,"");
-	
-	CQprefs.setIntPref("mailnews.reply_header_type", 1);
-	if (custom && ! CQprefs.getBoolPref("changequote.headers.add_newline", ""))
-		CQprefs.setCharPref("mailnews.reply_header_colon", "");
-	else
-		CQprefs.setCharPref("mailnews.reply_header_colon", "\n");
+	else {
+		realnewhdr = realnewhdr.replace(/\[\[/g, "([[)");
+		realnewhdr = realnewhdr.replace(/\]\]/g, "(]])");
+	}	
 
-	str.data = realnewhdr;
-	CQprefs.setComplexValue("mailnews.reply_header_authorwrote", Components.interfaces.nsISupportsString, str);
+	CQprefs.setIntPref("mailnews.reply_header_type", 1);
+	
+	if (CQprefs.getPrefType("mailnews.reply_header_authorwrotesingle") > 0) {
+		if (custom && ! CQprefs.getBoolPref("changequote.headers.add_newline", ""))
+			str.data = realnewhdr;
+		else
+			str.data = realnewhdr+"\n";
+		CQprefs.setComplexValue("mailnews.reply_header_authorwrotesingle", Components.interfaces.nsISupportsString, str);	
+	}
+	else {
+		if (custom && ! CQprefs.getBoolPref("changequote.headers.add_newline", ""))
+			CQprefs.setCharPref("mailnews.reply_header_colon", "");
+		else
+			CQprefs.setCharPref("mailnews.reply_header_colon", "\n");
+		str.data = realnewhdr;
+		CQprefs.setComplexValue("mailnews.reply_header_authorwrote", Components.interfaces.nsISupportsString, str);
+	}
+
 	closeWindowOrMarkReadAfterReply(email);
 }
 
@@ -585,11 +665,18 @@ function d2h(d) {
 
 // Reset the headers to the standard
 function standardHeader(msguri) {
-        CQprefs.setIntPref("mailnews.reply_header_type", 1);
-        CQprefs.setCharPref("mailnews.reply_header_authorwrote", "chrome://messenger/locale/messengercompose/composeMsgs.properties");
-        CQprefs.setCharPref("mailnews.reply_header_ondate", "chrome://messenger/locale/messengercompose/composeMsgs.properties");
-        CQprefs.setCharPref("mailnews.reply_header_separator",  ", ");
-        CQprefs.setCharPref("mailnews.reply_header_colon", ":");
+	if (CQprefs.prefHasUserValue("mailnews.reply_header_type"))
+	        CQprefs.clearUserPref("mailnews.reply_header_type");
+	if (CQprefs.prefHasUserValue("mailnews.reply_header_authorwrote"))
+   	     CQprefs.clearUserPref("mailnews.reply_header_authorwrote");
+	if (CQprefs.prefHasUserValue("mailnews.reply_header_ondate"))
+      		CQprefs.clearUserPref("mailnews.reply_header_ondate");
+	if (CQprefs.prefHasUserValue("mailnews.reply_header_separator"))
+        	CQprefs.clearUserPref("mailnews.reply_header_separator");
+	if (CQprefs.prefHasUserValue("mailnews.reply_header_colon"))
+        	CQprefs.clearUserPref("mailnews.reply_header_colon");
+	if (CQprefs.prefHasUserValue("mailnews.reply_header_authorwrotesingle"))
+   	     CQprefs.clearUserPref("mailnews.reply_header_authorwrotesingle");
 	if (msguri)
 		closeWindowOrMarkReadAfterReply(msguri);
 }
@@ -676,18 +763,19 @@ function CQgetDate(hdr,headerDate) {
 		headerDate = headerDate.replace(/ +$/, "");
 		return headerDate;
 	}
-	var date = new Date(hdr.date/1000);		
+	var date = new Date(hdr.date/1000);
 	if (CQuse_date_long) {
 		var dateLongFormat = CQprefs.getIntPref("changequote.headers.date_long_format");
 		if (dateLongFormat == 2 && CQdate != "-1")
 			var datestring = CQdate;
-		else if (dateLongFormat == 1 || CQdate == "-1")
+		else if (dateLongFormat == 1 || CQdate == "-1") 		
 			var datestring = date.toString();
 		else if (dateLongFormat == 3) 
 			var datestring = decodeCustomizedDate(date);
-		else
+		else if (dateLongFormat == 4 && CQdate != "-1") 
+			var datestring = decodeCustomizedDateSender(CQdate);
+		else 
 			var datestring = date.toLocaleString();
-
 		if (CQprefs.getBoolPref("changequote.headers.capitalize_date"))
 			datestring = CQcapitalize(datestring);
 		datestring = datestring.replace(/ +$/, "");
@@ -702,8 +790,84 @@ function CQgetDate(hdr,headerDate) {
 	}
 }
 
+function decodeCustomizedDateSender(date) {
+	var d = date.match(/\d\d?/);
+	var e = d<10 ? " "+d : d;
+	d = d<10 ? "0"+d : d;
+	var M = date.split(" ")[2];
+	switch(M) {
+		case "jan":
+			var m = "01";
+			break; 
+		case "feb":
+			var m = "02";
+			break; 
+		case "mar":
+			var m = "03";
+			break; 
+		case "apr":
+			var m = "04";
+			break; 
+		case "may":
+			var m = "05";
+			break; 
+		case "jun":
+			var m = "06";
+			break; 
+		case "jul":
+			var m = "07";
+			break; 
+		case "aug":
+			var m = "08";
+			break; 
+		case "sep":
+			var m = "09";
+			break;
+		case "oct":
+			var m = "10";
+			break;  
+		case "nov":
+			var m = "11";
+			break;
+		case "dec":
+			var m = "12";
+			break;  
+		default:
+			var m = " ";
+	}
+	M = M.substring(0,1).toUpperCase()+M.substring(1);
+	var D = date.substring(0,3);
+	var Y = date.split(" ")[3];
+	var i = date.split(" ")[4].split(":")[1];
+	var s = date.split(" ")[4].split(":")[2];
+	var H = date.split(" ")[4].split(":")[0];
+	var h = H>12 ? H-12 : H;
+	var a = H>12 ? "pm" : "am";
+	var A = H>12 ? "PM" : "AM";
+	var z = date.split(" ")[5];
+	z = z.substring(0,5);
+	var str = CQprefs.getCharPref("changequote.headers.dateSender_custom_format");
+	str = str.replace("%d", d);
+	str = str.replace("%D", D);
+	str = str.replace("%m", m);
+	str = str.replace("%M", M);
+	str = str.replace("%y", Y);
+	str = str.replace("%Y", Y);
+	str = str.replace("%i", i);
+	str = str.replace("%s", s);
+	str = str.replace("%H", H);
+	str = str.replace("%h", h);
+	str = str.replace("%A", A);
+	str = str.replace("%a", a);
+	str = str.replace("%e", e);
+	str = str.replace("%z", z);
+	return str;
+}
+
+
 function decodeCustomizedDate(date) {
 	var d = date.getDate();
+	var e = d<10 ? " "+d : d;
 	d = d<10 ? "0"+d : d;
 	var m = date.getMonth()+1;
 	m = m<10 ? "0"+m : m;
@@ -720,12 +884,21 @@ function decodeCustomizedDate(date) {
 	var h = H>12 ? H-12 : H;
 	var a = H>12 ? "pm" : "am";
 	var A = H>12 ? "PM" : "AM";
+	var z = date.toString().split(" ")[5];
+	z = z.replace(/[a-zA-Z]+/, "");
+	z = z.substring(0,5);
+	/*var zo = date.getTimezoneOffset();
+	var zs = zo<=0 ? '+' : '-', za = Math.abs(zo);
+	var zh = za / 60, zm = za % 60;
+	var z = zs + (zh<=9 ? '0'+zh : zh) + (zm<=9 ? '0'+zm : zm);*/
 	var str = CQprefs.getCharPref("changequote.headers.date_custom_format");
+	H = H<10 ? "0"+H : H;
+	h = h<10 ? "0"+h : h;
 	str = str.replace("%d", d);
 	str = str.replace("%D", D);
 	str = str.replace("%m", m);
 	str = str.replace("%M", M);
-	str = str.replace("%y", y);
+	str = str.replace("%y", Y);
 	str = str.replace("%Y", Y);
 	str = str.replace("%i", i);
 	str = str.replace("%s", s);
@@ -733,6 +906,8 @@ function decodeCustomizedDate(date) {
 	str = str.replace("%h", h);
 	str = str.replace("%A", A);
 	str = str.replace("%a", a);
+	str = str.replace("%e", e);
+	str = str.replace("%z", z);
 	return str;
 }
 
@@ -766,6 +941,12 @@ Components.interfaces.nsISupportsString).data;
 	var sender_mail = sender.replace(/.+</,"");
 	sender_mail = sender_mail.replace(">","");
 	ch = ch.replace("%%7", sender_mail);
+	var recipient_nomail = recipient.replace(/<.+?>/g, "");
+	recipient_nomail =  recipient_nomail.replace(/ +$/, "");
+	ch = ch.replace("%%8", recipient_nomail);
+	 var cclist_nomail = cclist.replace(/<.+?>/g,  "");
+	cclist_nomail =  cclist_nomail.replace(/ +$/, "");
+	ch = ch.replace("%%9", cclist_nomail);
 
 	 if (cclist == "§§§§" ||  subject == "§§§§" || recipient == "§§§§" || sender == "§§§§") {
                 ch = ch.replace(/\{\{.*§§§§.*\}\}/g, "§§§§");
@@ -776,7 +957,6 @@ Components.interfaces.nsISupportsString).data;
 
         ch = ch.replace(/\{\{/g, "");
         ch = ch.replace(/\}\}/g, "");
-
 	return ch;
 }
 

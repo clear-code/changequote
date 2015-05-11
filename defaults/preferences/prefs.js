@@ -19,6 +19,7 @@ pref("changequote.headers.news.customized", "");
 pref("changequote.set.headers.news",false);
 pref("changequote.headers.ignore_reply_to", false);
 pref("changequote.headers.date_custom_format", "");
+pref("changequote.headers.dateSender_custom_format", "");
 pref("changequote.headers.add_newline", false);
 pref("changequote.headers.capitalize_date", true);
 pref("changequote.headers.label_bold", false);

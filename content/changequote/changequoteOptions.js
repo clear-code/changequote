@@ -40,6 +40,7 @@
 	document.getElementById("CHbox-news").value = head;
 
 	document.getElementById("dateCustomBox").value = prefs.getCharPref("changequote.headers.date_custom_format");
+	document.getElementById("dateCustomBoxUTC").value = prefs.getCharPref("changequote.headers.dateSender_custom_format");
 	document.getElementById("CQadd_newline").checked = prefs.getBoolPref("changequote.headers.add_newline");	
 	document.getElementById("CQcapitalize_date").checked = prefs.getBoolPref("changequote.headers.capitalize_date");
 	document.getElementById("CQhtml_support").checked = prefs.getBoolPref("changequote.headers.custom_html_enabled");
@@ -92,6 +93,7 @@ function CQprefsOut()  {
 	prefs.setComplexValue("changequote.headers.news.customized", Components.interfaces.nsISupportsString, str);
 
 	prefs.setCharPref("changequote.headers.date_custom_format", document.getElementById("dateCustomBox").value);
+	prefs.setCharPref("changequote.headers.dateSender_custom_format", document.getElementById("dateCustomBoxUTC").value);
 	prefs.setBoolPref("changequote.headers.add_newline", document.getElementById("CQadd_newline").checked);
 	prefs.setBoolPref("changequote.headers.capitalize_date", document.getElementById("CQcapitalize_date").checked);
 	prefs.setBoolPref("changequote.headers.custom_html_enabled", document.getElementById("CQhtml_support").checked);
