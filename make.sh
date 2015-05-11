@@ -1,3 +1,3 @@
 #!/bin/sh
 
-./makexpi.sh -n changequote -o
+./makexpi.sh -n changequote
